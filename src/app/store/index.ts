@@ -2,7 +2,6 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { ChatModel, ChatThread, Project } from "app-types/chat";
 import { AllowedMCPServer, MCPServerInfo } from "app-types/mcp";
-import { OPENAI_VOICE } from "lib/ai/speech/open-ai/use-voice-chat.openai";
 import { WorkflowSummary } from "app-types/workflow";
 import { AppDefaultToolkit } from "lib/ai/tools";
 export interface AppState {
@@ -29,15 +28,6 @@ export interface AppState {
     instructions: string;
     chatModel?: ChatModel;
   };
-  voiceChat: {
-    isOpen: boolean;
-    threadId?: string;
-    projectId?: string;
-    options: {
-      provider: string;
-      providerOptions?: Record<string, any>;
-    };
-  };
 }
 
 export interface AppDispatch {
@@ -61,15 +51,6 @@ const initialState: AppState = {
   temporaryChat: {
     isOpen: false,
     instructions: "",
-  },
-  voiceChat: {
-    isOpen: false,
-    options: {
-      provider: "openai",
-      providerOptions: {
-        model: OPENAI_VOICE["Alloy"],
-      },
-    },
   },
 };
 
@@ -95,13 +76,6 @@ export const appStore = create<AppState & AppDispatch>()(
           isOpen: false,
         },
         toolPresets: state.toolPresets || initialState.toolPresets,
-        voiceChat: {
-          ...initialState.voiceChat,
-          ...state.voiceChat,
-          threadId: undefined,
-          projectId: undefined,
-          isOpen: false,
-        },
       }),
     },
   ),

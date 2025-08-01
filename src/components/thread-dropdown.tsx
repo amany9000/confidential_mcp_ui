@@ -20,7 +20,6 @@ import {
   DialogTrigger,
 } from "ui/dialog";
 import { Input } from "ui/input";
-import { CreateProjectWithThreadPopup } from "./create-project-with-thread-popup";
 import { Popover, PopoverContent, PopoverTrigger } from "ui/popover";
 import {
   Command,
@@ -109,17 +108,6 @@ export function ThreadDropdown({
           <CommandSeparator />
           <CommandList>
             <CommandGroup>
-              <CommandItem className="cursor-pointer">
-                <CreateProjectWithThreadPopup
-                  threadId={threadId}
-                  onClose={() => setOpen(false)}
-                >
-                  <div className="flex items-center gap-2 w-full">
-                    <WandSparkles className="text-foreground" />
-                    <span className="mr-4">{t("summarizeAsProject")}</span>
-                  </div>
-                </CreateProjectWithThreadPopup>
-              </CommandItem>
               <CommandItem className="cursor-pointer p-0">
                 <UpdateThreadNameDialog
                   initialTitle={beforeTitle ?? ""}

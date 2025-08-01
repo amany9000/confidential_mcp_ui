@@ -14,7 +14,6 @@ import {
 } from "lib/ai/prompts";
 import { mcpClientsManager } from "lib/ai/mcp/mcp-manager";
 import { errorIf, safe } from "ts-safe";
-import { DEFAULT_VOICE_TOOLS } from "lib/ai/speech";
 import { rememberMcpServerCustomizationsAction } from "../actions";
 
 export async function POST(request: NextRequest) {
@@ -96,7 +95,7 @@ export async function POST(request: NextRequest) {
           model: "whisper-1",
         },
         instructions: systemPrompt,
-        tools: [...openAITools, ...DEFAULT_VOICE_TOOLS],
+        tools: [...openAITools],
       }),
     });
 

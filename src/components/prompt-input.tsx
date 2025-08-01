@@ -4,7 +4,6 @@ import {
   AudioWaveformIcon,
   ChevronDown,
   CornerRightUp,
-  Paperclip,
   Pause,
 } from "lucide-react";
 import { useCallback, useMemo, useRef, useState } from "react";
@@ -19,7 +18,6 @@ import dynamic from "next/dynamic";
 import { ToolModeDropdown } from "./tool-mode-dropdown";
 
 import { ToolSelectDropdown } from "./tool-select-dropdown";
-import { Tooltip, TooltipContent, TooltipTrigger } from "ui/tooltip";
 import { useTranslations } from "next-intl";
 import { Editor } from "@tiptap/react";
 import { WorkflowSummary } from "app-types/workflow";
@@ -34,7 +32,6 @@ interface PromptInputProps {
   isLoading?: boolean;
   model?: ChatModel;
   setModel?: (model: ChatModel) => void;
-  voiceDisabled?: boolean;
 }
 
 const ChatMentionInput = dynamic(() => import("./chat-mention-input"), {
@@ -51,14 +48,12 @@ export default function PromptInput({
   setModel,
   input,
   setInput,
-  onStop,
   isLoading,
   toolDisabled,
-  voiceDisabled,
 }: PromptInputProps) {
   const t = useTranslations("Chat");
 
-  const [currentThreadId, currentProjectId, globalModel, appStoreMutate] =
+  const [_currentThreadId, _currentProjectId, globalModel, appStoreMutate] =
     appStore(
       useShallow((state) => [
         state.currentThreadId,
@@ -151,15 +146,6 @@ export default function PromptInput({
                 />
               </div>
               <div className="flex w-full items-center gap-[1px]  z-30">
-                <Button
-                  variant={"ghost"}
-                  size={"sm"}
-                  className="rounded-full hover:bg-input! p-2!"
-                  onClick={notImplementedToast}
-                >
-                  <Paperclip />
-                </Button>
-
                 {!toolDisabled && (
                   <>
                     <ToolModeDropdown />
@@ -185,49 +171,6 @@ export default function PromptInput({
                     <ChevronDown className="size-3" />
                   </Button>
                 </SelectModel>
-                {!isLoading && !input.length && !voiceDisabled ? (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        size={"sm"}
-                        onClick={() => {
-                          appStoreMutate((state) => ({
-                            voiceChat: {
-                              ...state.voiceChat,
-                              isOpen: true,
-                              threadId: currentThreadId ?? undefined,
-                              projectId: currentProjectId ?? undefined,
-                            },
-                          }));
-                        }}
-                        className="rounded-full p-2!"
-                      >
-                        <AudioWaveformIcon size={16} />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>{t("VoiceChat.title")}</TooltipContent>
-                  </Tooltip>
-                ) : (
-                  <div
-                    onClick={() => {
-                      if (isLoading) {
-                        onStop();
-                      } else {
-                        submit();
-                      }
-                    }}
-                    className="fade-in animate-in cursor-pointer text-muted-foreground rounded-full p-2 bg-secondary hover:bg-accent-foreground hover:text-accent transition-all duration-200"
-                  >
-                    {isLoading ? (
-                      <Pause
-                        size={16}
-                        className="fill-muted-foreground text-muted-foreground"
-                      />
-                    ) : (
-                      <CornerRightUp size={16} />
-                    )}
-                  </div>
-                )}
               </div>
             </div>
           </div>

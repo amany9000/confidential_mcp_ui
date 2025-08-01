@@ -45,7 +45,7 @@ type Props = PropsWithChildren<{
 export function ProjectDropdown({ project, children, side, align }: Props) {
   const router = useRouter();
   const t = useTranslations();
-  const [currentProjectId, appStoreMutate] = appStore(
+  const [currentProjectId, _appStoreMutate] = appStore(
     useShallow((state) => [state.currentProjectId, state.mutate]),
   );
 
@@ -87,24 +87,6 @@ export function ProjectDropdown({ project, children, side, align }: Props) {
           <CommandSeparator />
           <CommandList>
             <CommandGroup>
-              <CommandItem className="cursor-pointer p-0">
-                <div
-                  className="flex items-center gap-2 w-full px-2 py-1 rounded"
-                  onClick={() => {
-                    appStoreMutate((state) => ({
-                      voiceChat: {
-                        ...state.voiceChat,
-                        isOpen: true,
-                        threadId: generateUUID(),
-                        projectId: project.id,
-                      },
-                    }));
-                  }}
-                >
-                  <AudioWaveformIcon className="text-foreground" />
-                  <span>{t("Chat.VoiceChat.title")}</span>
-                </div>
-              </CommandItem>
               <CommandItem className="cursor-pointer p-0">
                 <UpdateProjectNameDialog
                   initialName={project.name}

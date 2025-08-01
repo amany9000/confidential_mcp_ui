@@ -10,13 +10,7 @@ import { useChat } from "@ai-sdk/react";
 import { ChatApiSchemaRequestBody, Project } from "app-types/chat";
 import { generateUUID } from "lib/utils";
 
-import {
-  Loader,
-  MoreHorizontal,
-  FileUp,
-  Pencil,
-  MessagesSquare,
-} from "lucide-react";
+import { Loader, MoreHorizontal, Pencil, MessagesSquare } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
@@ -24,7 +18,6 @@ import { useEffect, useMemo, useState } from "react";
 
 import useSWR, { mutate } from "swr";
 import { Button } from "ui/button";
-import { notImplementedToast } from "ui/shared-toast";
 import { Skeleton } from "ui/skeleton";
 import { useShallow } from "zustand/shallow";
 
@@ -185,12 +178,6 @@ export default function ProjectPage() {
           onStop={stop}
         />
         <div className="flex my-4 mx-2 gap-4">
-          <FeatureCard
-            title="Add Files"
-            onClick={notImplementedToast}
-            description={t("chatInThisProjectCanAccessFileContents")}
-            icon={<FileUp size={18} className="text-muted-foreground" />}
-          />
           <FeatureCard
             title="Add Instructions"
             description={

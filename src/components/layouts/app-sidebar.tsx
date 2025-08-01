@@ -14,8 +14,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 import { AppSidebarMenus } from "./app-sidebar-menus";
-import { AppSidebarProjects } from "./app-sidebar-projects";
-import { AppSidebarThreads } from "./app-sidebar-threads";
 
 import { isShortcutEvent, Shortcuts } from "lib/keyboard-shortcuts";
 import { AppSidebarUser } from "./app-sidebar-user";
@@ -89,8 +87,6 @@ export function AppSidebar({
       <SidebarContent className="mt-2 overflow-hidden relative">
         <div className="flex flex-col gap-2 overflow-y-auto">
           <AppSidebarMenus />
-          <AppSidebarProjects />
-          <AppSidebarThreads />
         </div>
       </SidebarContent>
       <SidebarFooter className="flex flex-col items-stretch space-y-2">
